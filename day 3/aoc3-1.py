@@ -1,6 +1,6 @@
 allowed_chars = "0123456789,"
 res = 0
-with open("input.txt", "r") as file:
+with open("test.txt", "r") as file:
     for line in file:
         for i in range(len(line)):
             if line[i:i+4] == "mul(":
