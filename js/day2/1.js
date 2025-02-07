@@ -1,47 +1,48 @@
 import { readFileSync } from "fs";
 
-let fileData = "";
-
-fileData = readFileSync("input.txt", "utf8");
+const fileData = readFileSync("input.txt", "utf8");
 
 const data = fileData
   .split("\n")
-  .map((row) => row.trim())cd ..
-  .filter((item) => item !== "");
+  .map((row) => row.trim())
+  .filter((row) => row !== "");
 
-const filteredData = [];
+const isSorted = function (line) {
+  const sortedLine = [...line].sort((a, b) => Number(a) - Number(b));
+  const reversedLine = [...line].sort((a, b) => Number(b) - Number(a));
 
-for (let line of data) {
-  const parsedLine = line.split(" ");
-  const sortedLine = [...parsedLine].sort((a, b) => Number(a) - Number(b));
-  const reversedLine = [...sortedLine].reverse();
+  const strLine = JSON.stringify(line);
+  const strSortedLine = JSON.stringify(sortedLine);
+  const strReversedLine = JSON.stringify(reversedLine);
 
-  if (
-    JSON.stringify(sortedLine) === JSON.stringify(parsedLine) ||
-    JSON.stringify(reversedLine) === JSON.stringify(parsedLine)
-  ) {
-    filteredData.push(line.split(" "));
+  if (strSortedLine === strLine || strReversedLine === strLine) {
+    return true;
   }
-}
+  return false;
+};
 
-let res = 0;
-
-for (let filtData of filteredData) {
+const diffIsRight = function (line) {
   let l = 0;
   let r = l + 1;
-  let addLine = true;
-  while (r < filtData.length) {
-    const diff = Math.abs(filtData[r] - filtData[l]);
+
+  while (r < line.length) {
+    const diff = Math.abs(line[r] - line[l]);
     if (diff === 0 || diff > 3) {
-      addLine = false;
-      break;
+      return false;
     }
     l++;
     r++;
   }
-  if (addLine) {
-    res += 1;
-  }
+  return true;
+};
+
+let res = 0;
+
+for (let row of data) {
+  const line = row.split(" ");
+  if (!diffIsRight(line)) continue;
+  if (!isSorted(line)) continue;
+  res += 1;
 }
 
 console.log(res);
