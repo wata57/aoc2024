@@ -145,14 +145,16 @@ let res = 0;
 
 for (let x = 0; x < rows; x++) {
   for (let y = 0; y < cols; y++) {
-    if (checkLeft(x, y)) res++;
-    if (checkRight(x, y)) res++;
-    if (checkDiagUpLeft(x, y)) res++;
-    if (checkDiagUpRight(x, y)) res++;
-    if (checkDiagDownLeft(x, y)) res++;
-    if (checkDiagDownRight(x, y)) res++;
-    if (checkDown(x, y)) res++;
-    if (checkUp(x, y)) res++;
+    if (data[x][y] === "X") {
+      if (checkLeft(x, y)) res++;
+      if (checkRight(x, y)) res++;
+      if (checkDiagUpLeft(x, y)) res++;
+      if (checkDiagUpRight(x, y)) res++;
+      if (checkDiagDownLeft(x, y)) res++;
+      if (checkDiagDownRight(x, y)) res++;
+      if (checkDown(x, y)) res++;
+      if (checkUp(x, y)) res++;
+    }
   }
 }
 
